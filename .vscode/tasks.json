@@ -1,0 +1,49 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "loader-bin",
+			"type": "shell",
+			"command": "vasmm68k_mot",
+			"args": [
+				"tte_loader.asm",
+				"-o",
+				"build\\loader.bin",
+				"-m68000",
+				"-Fbin"
+			],
+			"group": "build"
+		},
+		{
+			"label": "asm-loader",
+			"type": "shell",
+			"command": "vasmm68k_mot",
+			"args": [
+				"tte_loader.asm",
+				"-o",
+				"build\\tte_loader.o",
+				"-m68000",
+				"-Fhunk",
+				"-linedebug",
+				"-ignore-mult-inc",
+				"-nowarn=2047",
+				"-nowarn=2069"
+			],
+			"group": "build"
+		},
+		{
+			"label": "build-loader",
+			"type": "shell",
+			"command": "vlink",
+			"args": [
+				"build\\tte_loader.o",
+				"-ouae\\dh0\\tte_loader",
+				"-bamigahunk",
+				"-Bstatic"
+			],
+			"group": "build",
+			"dependsOn": "asm-loader",
+			"problemMatcher": []
+		},
+	]
+}
